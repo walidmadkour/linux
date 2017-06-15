@@ -1,0 +1,53 @@
+#iptable to forward the port
+
+-A PREROUTING -i ppp0 -p tcp -m tcp --dport 89 -j DNAT --to-destination 192.168.7.2:80 
+
+iptables -t nat -A PREROUTING -i ppp0 -p tcp -m tcp --dport 22342 -j DNAT --to-destination 192.168.7.2:2234 
+
+iptables -t nat -A PREROUTING -i eth0 -p tcp -m tcp --dport 22342 -j DNAT --to-destination 192.168.7.2:2234 
+
+
+iptables -t nat -A PREROUTING -i ppp0 -p tcp -m tcp --dport 89 -j DNAT --to-destination 192.168.7.2:80
+
+iptables -t nat -A PREROUTING -i eth0 -p tcp -m tcp --dport 89 -j DNAT --to-destination 192.168.7.2:80
+
+
+iptables -t nat -A PREROUTING -i eth1.10 -p tcp -m tcp --dport 89 -j DNAT --to-destination 192.168.88.3:80
+
+iptables -t nat -A PREROUTING -i $HS_WANIF -p tcp -m tcp --dport 88 -j REDIRECT --to-ports 80
+iptables -t nat -A PREROUTING -i eth0 -p tcp -m tcp --dport 88 -j REDIRECT --to-ports 80
+
+
+
+#iptable -A PREROUTING -i ppp0 -p tcp -m tcp --dport 89 -j DNAT --to-destination 192.168.7.2:80 
+
+tcpdump -i eth1.10 -n port 67 and port 68
+
+
+tcpdump -n -vv -i eth1.10 port bootps or port bootpc
+
+
+tcpdump -vvv -len -s 1500 udp port 67
+
+
+
+ssh -o ConnectTimeout=10
+
+
+arp -d 192.168.1.1
+
+ip -s -s neigh flush all
+
+# ethtool -s eth0 speed 100 duplex full
+
+# route add -net 192.168.7.2 netmask 255.255.255.0 gw 192.168.7.1 dev eth2
+
+
+#dhcp Static
+
+host host1 {
+hardware ethernet 64:eb:8c:2c:0f:8f;
+fixed-address 10.254.11.161;
+}
+
+chilli_query dhcp-release 58-40-4E-7C-6B-0A
